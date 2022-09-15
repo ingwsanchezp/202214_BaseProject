@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { AerolineaService } from './aerolinea.service';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
