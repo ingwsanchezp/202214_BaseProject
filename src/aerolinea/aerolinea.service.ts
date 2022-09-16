@@ -33,7 +33,7 @@ export class AerolineaService {
 
   async create(aerolinea: AerolineaEntity): Promise<AerolineaEntity> {
     const fechaActual = new Date();
-    if (aerolinea.fechaFundacion >= fechaActual){
+    if (aerolinea.fechaFundacion.getFullYear() > fechaActual.getFullYear() || aerolinea.fechaFundacion.getFullYear() === fechaActual.getFullYear()){
       throw new BusinessLogicException('La fecha de fundacion debe ser menor a la fecha actual', BusinessErrors.PRECONDITION_FAILED);    
     }
     return await this.aerolineaRepositorio.save(aerolinea);
@@ -44,7 +44,7 @@ export class AerolineaService {
     const persistAerolinea: AerolineaEntity = await this.aerolineaRepositorio.findOne({ where: { id } });
     if (!persistAerolinea)
       throw new BusinessLogicException('La aerolinea con el id no ha sido encontrada', BusinessErrors.NOT_FOUND);
-    if (aerolinea.fechaFundacion >= fechaActual){
+    if (aerolinea.fechaFundacion.getFullYear() > fechaActual.getFullYear() || aerolinea.fechaFundacion.getFullYear() === fechaActual.getFullYear()){
       throw new BusinessLogicException('La fecha de fundacion debe ser menor a la fecha actual', BusinessErrors.PRECONDITION_FAILED);
     }
     return await this.aerolineaRepositorio.save({...persistAerolinea, ...aerolinea});
