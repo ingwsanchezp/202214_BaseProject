@@ -17,14 +17,14 @@ export class AerolineaService {
 
   async findAll(): Promise<AerolineaEntity[]> {
     return await this.aerolineaRepositorio.find({
-      relations: { aeropuerto: true },
+      relations: { aeropuertos: true },
     });
   }
 
   async findOne(id: string): Promise<AerolineaEntity> {
     const aerolinea: AerolineaEntity = await this.aerolineaRepositorio.findOne({
       where: { id },
-      relations: { aeropuerto: true },
+      relations: { aeropuertos: true },
     });
     if (!aerolinea)
       throw new BusinessLogicException('La Aerolinea con id no ha sido encontrada', BusinessErrors.NOT_FOUND);

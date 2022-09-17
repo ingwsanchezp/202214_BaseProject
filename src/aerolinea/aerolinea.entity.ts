@@ -1,5 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { AeropuertoEntity } from '../aeropuerto/aeropuerto.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity()
 export class AerolineaEntity {
@@ -18,6 +19,7 @@ export class AerolineaEntity {
   @Column()
   paginaWeb: string;
 
-  @ManyToOne(() => AeropuertoEntity, (aeropuerto) => aeropuerto.aerolineas)
-  aeropuerto: AeropuertoEntity;
+  @ManyToMany(() => AeropuertoEntity, (aeropuerto) => aeropuerto.aerolineas, { cascade: true, })
+  @JoinTable()
+  aeropuertos: AeropuertoEntity[];
 }

@@ -12,6 +12,7 @@ describe('aerolinea', () => {
     let service: AerolineaService;
     let repository: Repository<AerolineaEntity>;
     let aerolineaList: AerolineaEntity[];
+    let aeropuertosList: AeropuertoEntity[];
     
 
     beforeEach(async () => {
@@ -69,6 +70,7 @@ describe('aerolinea', () => {
     });
 
     it('Create crear una aerolinea ', async () => {
+        aeropuertosList = [];
         const aeropuerto = new AeropuertoEntity()
         aeropuerto.nombre = faker.commerce.productName();
         aeropuerto.ciudad = faker.address.cityName();
@@ -77,14 +79,14 @@ describe('aerolinea', () => {
         aeropuerto.aerolineas= [];
         const yearOld = new Date();
         yearOld.setFullYear(yearOld.getFullYear() - 1);
-
+        aeropuertosList.push(aeropuerto);
         const aerolineaSave: AerolineaEntity = {
             id: "",
             nombre: faker.company.name(),
             descripcion: faker.commerce.productDescription(),
             fechaFundacion: yearOld,
             paginaWeb: faker.internet.url(),
-            aeropuerto: aeropuerto
+            aeropuertos: aeropuertosList
         }
         
         const newAerolinea: AerolineaEntity = await service.create(aerolineaSave);
