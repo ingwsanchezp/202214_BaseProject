@@ -1,0 +1,393 @@
+{
+	"info": {
+		"_postman_id": "8210593c-f992-4129-a602-3586a145f91a",
+		"name": "aerolineas-aeropuertos",
+		"description": "Colección de peticiones a la asociación del servicio y represetacion de Aerolineas-Aeropuertos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Asociar un aeropuerto a una aerolínea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\":\"Dorado\",\n    \"codigo\":\"D01\",\n    \"pais\":\"Colombia\",\n    \"ciudad\":\"Bogota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airports"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "31b11bff-5eea-4a9d-a4a1-3b4228305918"
+						}
+					]
+				},
+				"description": "Asociar un aeropuerto a una aerolínea"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar un aeropuerto que no existe a una aerolínea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test(\"Obtener mensaje de error\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"La Aerolinea con id no ha sido encontrada\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\":\"Dorado\",\n    \"codigo\":\"D01\",\n    \"pais\":\"Colombia\",\n    \"ciudad\":\"Bogota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airports"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "31b11bff-5eea-4a9d-a4a1-3b4228305919"
+						}
+					]
+				},
+				"description": "Asociar un aeropuerto que no existe a una aerolínea"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los aeropuertos que cubre una aerolínea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airports"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "8b92907f-cf22-48f2-a095-937849c560f4"
+						}
+					]
+				},
+				"description": "Obtener todos los aeropuertos que cubre una aerolínea"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un aeropuerto asociado a una aerolínea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "4c970625-5259-4f06-8ab6-4db13e0ba131"
+						},
+						{
+							"key": "airportId",
+							"value": "f72b98f1-2a44-491a-9bdf-0e98a182c51a"
+						}
+					]
+				},
+				"description": "Obtener un aeropuerto asociado a una aerolínea"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un aeropuerto que no esté asociado a una aerolínea",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "4c970625-5259-4f06-8ab6-4db13e0ba131"
+						},
+						{
+							"key": "airportId",
+							"value": "11920803-5318-4246-aa50-63b8811ed68i"
+						}
+					]
+				},
+				"description": "Obtener un aeropuerto que no esté asociado a una aerolínea"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar los aeropuertos que están asociados a una aerolínea",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airport/old/:airportOldId/new/:airportNewId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airport",
+						"old",
+						":airportOldId",
+						"new",
+						":airportNewId"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "4c970625-5259-4f06-8ab6-4db13e0ba131"
+						},
+						{
+							"key": "airportOldId",
+							"value": "f72b98f1-2a44-491a-9bdf-0e98a182c51a"
+						},
+						{
+							"key": "airportNewId",
+							"value": "8e26f3ac-c945-424f-b0b1-8e3d5df597fc"
+						}
+					]
+				},
+				"description": "Actualizar los aeropuertos que están asociados a una aerolínea"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar los aeropuertos asociados a una aerolínea, con un aeropuerto inexistente",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airport/old/:airportOldId/new/:airportNewId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airport",
+						"old",
+						":airportOldId",
+						"new",
+						":airportNewId"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "4c970625-5259-4f06-8ab6-4db13e0ba131"
+						},
+						{
+							"key": "airportOldId",
+							"value": "f72b98f1-2a44-491a-9bdf-0e98a182c51b"
+						},
+						{
+							"key": "airportNewId",
+							"value": "8e26f3ac-c945-424f-b0b1-8e3d5df597ft"
+						}
+					]
+				},
+				"description": "Actualizar los aeropuertos asociados a una aerolínea, con un aeropuerto inexistente"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un aeropuerto previamente asociado a una aerolínea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "acc0a1e9-16c0-4df4-9431-f35b8797674b"
+						},
+						{
+							"key": "airportId",
+							"value": "c5b39054-1ffe-459a-a754-5558353586fe"
+						}
+					]
+				},
+				"description": "Eliminar un aeropuerto previamente asociado a una aerolínea"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un aeropuerto que no estaba previamente asociado a una aerolínea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/:airlineId/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						":airlineId",
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airlineId",
+							"value": "acc0a1e9-16c0-4df4-9431-f35b8797674b"
+						},
+						{
+							"key": "airportId",
+							"value": "c5b39054-1ffe-459a-a754-5558353586ff"
+						}
+					]
+				},
+				"description": "Eliminar un aeropuerto que no estaba previamente asociado a una aerolínea"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "{{baseUrl}}",
+			"value": "http://localhost:3000/api/v1"
+		}
+	]
+}

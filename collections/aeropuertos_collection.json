@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "538656b7-4037-4328-b2f0-41112807de9d",
+		"name": "aeropuertos",
+		"description": "Colección de peticiones a operaciones del servicio para la representación aeropuertos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un aeropuerto válido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"aeropuerto_id\", data.id);",
+							"",
+							"pm.test(\"Codigo de estado es 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\":\"Dorado\",\n    \"codigo\":\"D01\",\n    \"pais\":\"Colombia\",\n    \"ciudad\":\"Bogota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports"
+					]
+				},
+				"description": "Crear un aeropuerto válido"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un aeropuerto inválido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test(\"Obtener mensaje de error\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El codigo del aeropuerto es mayor a 3 digitos\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\":\"Dorado\",\n    \"codigo\":\"D010\",\n    \"pais\":\"Colombia\",\n    \"ciudad\":\"Bogota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports"
+					]
+				},
+				"description": "Crear un aeropuerto inválido"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los aeropuertos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Numero de aeropuertos > ' + 0, function () {",
+							"   var data = pm.response.json()",
+							"   pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Codigo de estado es 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports"
+					]
+				},
+				"description": "Obtener todos los aeropuertos"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un aeropuerto por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airportId",
+							"value": "4dec5e92-ba0a-4781-82e8-e76aaf34ce94"
+						}
+					]
+				},
+				"description": "Obtener un aeropuerto por ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un aeropuerto por un ID que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Obtener mensaje de error\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El aeropuerto con id no ha sido encontrado\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airportId",
+							"value": "4dec5e92-ba0a-4781-82e8-e76aaf34ce95"
+						}
+					]
+				},
+				"description": "Obtener un aeropuerto por un ID que no existe"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar un aeropuerto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\":\"Dorado Plaza\",\n    \"codigo\":\"DP0\",\n    \"pais\":\"Colombia\",\n    \"ciudad\":\"Bogota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airportId",
+							"value": "4dec5e92-ba0a-4781-82e8-e76aaf34ce94"
+						}
+					]
+				},
+				"description": "Actualizar un aeropuerto"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar un aeropuerto con un ID que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Obtener mensaje de error\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El aeropuerto con id no ha sido encontrado\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\":\"Dorado Plaza\",\n    \"codigo\":\"DP0\",\n    \"pais\":\"Colombia\",\n    \"ciudad\":\"Bogota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airportId",
+							"value": "4dec5e92-ba0a-4781-82e8-e76aaf34ce95"
+						}
+					]
+				},
+				"description": "Actualizar un aeropuerto con un ID que no existe"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un aeropuerto por su ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airportId",
+							"value": "4dec5e92-ba0a-4781-82e8-e76aaf34ce94"
+						}
+					]
+				},
+				"description": "Eliminar un aeropuerto por su ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un aeropuerto con un ID que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Obtener mensaje de error\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El aeropuerto con id no ha sido encontrado\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airports/:airportId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airports",
+						":airportId"
+					],
+					"variable": [
+						{
+							"key": "airportId",
+							"value": "4dec5e92-ba0a-4781-82e8-e76aaf34ce95"
+						}
+					]
+				},
+				"description": "Eliminar un aeropuerto con un ID que no existe"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "{{baseUrl}}",
+			"value": "http://localhost:3000/api/v1"
+		}
+	]
+}

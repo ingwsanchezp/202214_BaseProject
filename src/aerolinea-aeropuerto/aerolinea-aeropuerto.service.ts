@@ -36,7 +36,7 @@ export class AerolineaAeropuertoService {
         return aerolinea;
     }
 
-    async addAeropuertoParaAerolinea(aerolineaId: string, aeropuerto: AeropuertoEntity){
+    async addAeropuertoParaAerolinea(aerolineaId: string, aeropuerto: AeropuertoEntity): Promise<AerolineaEntity>{
         const aerolineaList: AerolineaEntity[] = [];
         const aerolinea: AerolineaEntity = await this.aerolineaRepositorio.findOne({where: {id: aerolineaId}});
         if (!aerolinea)

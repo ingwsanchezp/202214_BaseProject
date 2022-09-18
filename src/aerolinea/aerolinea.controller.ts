@@ -23,12 +23,14 @@ export class AerolineaController {
 
     @Post()
     async create(@Body() aerolineaDto: AerolineaDto){
+        aerolineaDto.fechaFundacion = new Date(aerolineaDto.fechaFundacion)
         const aerolinea: AerolineaEntity = plainToInstance(AerolineaEntity, aerolineaDto)
         return await this.aerolineaService.create(aerolinea);
     }
 
     @Put(':airlineId')
     async update(@Param('airlineId') aerolieaId: string, @Body() aerolineaDto: AerolineaDto){
+        aerolineaDto.fechaFundacion = new Date(aerolineaDto.fechaFundacion)
         const aerolinea: AerolineaEntity = plainToInstance(AerolineaEntity, aerolineaDto)
         return await this.aerolineaService.update(aerolieaId, aerolinea);
     }
