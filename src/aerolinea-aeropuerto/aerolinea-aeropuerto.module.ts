@@ -1,3 +1,4 @@
+import { AerolineaAeropuertoController } from './aerolinea-aeropuerto.controller';
 /* eslint-disable prettier/prettier */
 import { AerolineaAeropuertoService } from './aerolinea-aeropuerto.service';
 /* eslint-disable prettier/prettier */
@@ -8,7 +9,8 @@ import { AeropuertoEntity } from 'src/aeropuerto/aeropuerto.entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature([AerolineaEntity, AeropuertoEntity])],
-    controllers: [],
+    controllers: [
+        AerolineaAeropuertoController,],
     providers: [
         AerolineaAeropuertoService,],
 })
